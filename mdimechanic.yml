@@ -1,0 +1,33 @@
+code_name: 'DFTB+'
+docker:
+  image_name: 'mdi/dftb'
+
+  build_image:
+    - apt-get update
+    - apt-get install -y git wget vim libblas-dev liblapack-dev
+    - pip install cmake
+    #- pip install pymdi
+
+  build_engine:
+    # Obtain a clone of DFTB+
+    - |
+      if [ ! -d "build/dftbplus" ]; then
+        git clone https://github.com/MolSSI-MDI/dftbplus.git --branch mdi build/dftbplus
+      fi
+
+    - cd build/dftbplus
+    - mkdir build
+    - cd build
+    - cmake -DCMAKE_INSTALL_PREFIX=/repo/build/dftbplus/build/install ..
+    - make
+    - make install
+
+  validate_engine:
+    - echo "Insert code that will confirm that your code has been built successfully"
+    - exit 1
+
+engine_tests:
+  # Provide at least one example input that can be used to test your code's MDI functionality
+  script:
+    - echo "Insert commands to run an example calculation here"
+    - exit 1
