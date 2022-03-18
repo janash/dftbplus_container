@@ -18,7 +18,7 @@ docker:
     - cd build/dftbplus
     - mkdir build
     - cd build
-    - cmake -DCMAKE_INSTALL_PREFIX=/repo/build/dftbplus/build/install ..
+    - cmake -DBUILD_SHARED_LIBS=true -DCMAKE_INSTALL_PREFIX=/repo/build/dftbplus/build/install ..
     - make
     - make install
 
