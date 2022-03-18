@@ -33,6 +33,7 @@ docker:
       fi
 
     # Build the MDI DFTB+ wrapper
+    - export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/repo/build/dftbplus/build/install/lib/"
     - cd /repo/build/dftbplus_mdiwrapper
     - mkdir -p build
     - cd build
@@ -71,3 +72,13 @@ run_scripts:
           - export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/repo/build/dftbplus/build/install/lib/"
           - cd tests/firstcalc
           - dftb+ > output
+
+  mdi:
+    containers:
+      container1:
+        image: 'mdi/dftb'
+        script:
+          - export PATH="${PATH}:/repo/build/dftbplus_mdiwrapper/build/src"
+          - export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/repo/build/dftbplus/build/install/lib/"
+          - cd tests/firstcalc
+          - dftbplus_mdiwrapper
