@@ -4,7 +4,7 @@ docker:
 
   build_image:
     - apt-get update
-    - apt-get install -y git wget vim libblas-dev liblapack-dev
+    - apt-get install -y git wget vim libblas-dev liblapack-dev xz-utils
     - pip install cmake
     #- pip install pymdi
 
@@ -16,11 +16,21 @@ docker:
       fi
 
     - cd build/dftbplus
-    - mkdir build
+    - mkdir -p build
     - cd build
     - cmake -DBUILD_SHARED_LIBS=true -DCMAKE_INSTALL_PREFIX=/repo/build/dftbplus/build/install ..
     - make
     - make install
+
+    - |
+      if [ ! -d "/repo/tests/slakos" ]; then
+        cd /repo/tests
+        mkdir slakos
+        cd slakos
+        wget https://dftb.org/fileadmin/DFTB/public/slako/mio/mio-1-1.tar.xz
+        tar -xf mio-1-1.tar.xz
+        rm mio-1-1.tar.xz
+      fi
 
   validate_engine:
     - echo "Insert code that will confirm that your code has been built successfully"
@@ -31,3 +41,15 @@ engine_tests:
   script:
     - echo "Insert commands to run an example calculation here"
     - exit 1
+
+run_scripts:
+
+  test:
+    containers:
+      container1:
+        image: 'mdi/dftb'
+        script:
+          - export PATH="${PATH}:/repo/build/dftbplus/build/install/bin/"
+          - export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/repo/build/dftbplus/build/install/lib/"
+          - cd tests/firstcalc
+          - dftb+ > output
