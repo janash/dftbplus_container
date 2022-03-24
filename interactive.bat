@@ -1,1 +1,0 @@
-docker run --rm -v %cd%:/repo -it mdi/dftb bash

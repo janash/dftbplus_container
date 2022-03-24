@@ -6,7 +6,6 @@ docker:
     - apt-get update
     - apt-get install -y git wget vim libblas-dev liblapack-dev xz-utils
     - pip install cmake
-    #- pip install pymdi
 
   build_engine:
     # Obtain a clone of DFTB+
@@ -16,29 +15,12 @@ docker:
       fi
 
     # Build DFTB+ as a shared library
-    - |
-      if [ ! -d "/repo/build/dftbplus/build" ]; then
-        cd build/dftbplus
-        mkdir -p build
-        cd build
-        cmake -DWITH_API=true -DBUILD_SHARED_LIBS=true -DCMAKE_INSTALL_PREFIX=/repo/build/dftbplus/build/install ..
-        make
-        make install
-      fi
-
-    # Obtain a clone of the MDI DFTB+ wrapper
-    - |
-      if [ ! -d "/repo/build/dftbplus_mdiwrapper" ]; then
-        git clone https://github.com/MolSSI-MDI/dftbplus_mdiwrapper.git /repo/build/dftbplus_mdiwrapper
-      fi
-
-    # Build the MDI DFTB+ wrapper
-    - export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/repo/build/dftbplus/build/install/lib/"
-    - cd /repo/build/dftbplus_mdiwrapper
+    - cd build/dftbplus
     - mkdir -p build
     - cd build
-    - cmake ..
-    - make
+    - cmake -DWITH_API=true -DBUILD_SHARED_LIBS=true -DCMAKE_INSTALL_PREFIX=/repo/build/dftbplus/build/install ..
+    - make -j 4
+    - make install
 
     # Download parameterization files
     - |
@@ -50,16 +32,6 @@ docker:
         tar -xf mio-1-1.tar.xz
         rm mio-1-1.tar.xz
       fi
-
-  validate_engine:
-    - echo "Insert code that will confirm that your code has been built successfully"
-    - exit 1
-
-engine_tests:
-  # Provide at least one example input that can be used to test your code's MDI functionality
-  script:
-    - echo "Insert commands to run an example calculation here"
-    - exit 1
 
 run_scripts:
 
@@ -73,12 +45,3 @@ run_scripts:
           - cd tests/firstcalc
           - dftb+ > output
 
-  mdi:
-    containers:
-      container1:
-        image: 'mdi/dftb'
-        script:
-          - export PATH="${PATH}:/repo/build/dftbplus_mdiwrapper/build/src"
-          - export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/repo/build/dftbplus/build/install/lib/"
-          - cd tests/firstcalc
-          - dftbplus_mdiwrapper
