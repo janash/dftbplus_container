@@ -29,7 +29,7 @@ docker:
     # Obtain a clone of the MDI DFTB+ wrapper
     - |
       if [ ! -d "/repo/build/dftbplus_mdiwrapper" ]; then
-        git clone https://github.com/MolSSI-MDI/dftbplus_mdiwrapper.git /repo/build/dftbplus_mdiwrapper
+        git clone https://github.com/MolSSI-MDI/dftbplus_mdiwrapper.git --branch fortran /repo/build/dftbplus_mdiwrapper
       fi
 
     # Build the MDI DFTB+ wrapper
