@@ -29,7 +29,7 @@ docker:
     # Obtain a clone of the MDI DFTB+ wrapper
     - |
       if [ ! -d "/repo/build/dftbplus_mdiwrapper" ]; then
-        git clone https://github.com/MolSSI-MDI/dftbplus_mdiwrapper.git --branch fortran /repo/build/dftbplus_mdiwrapper
+        git clone https://github.com/MolSSI-MDI/dftbplus_mdiwrapper.git /repo/build/dftbplus_mdiwrapper
       fi
 
     # Build the MDI DFTB+ wrapper
@@ -58,8 +58,10 @@ docker:
 engine_tests:
   # Provide at least one example input that can be used to test your code's MDI functionality
   script:
-    - echo "Insert commands to run an example calculation here"
-    - exit 1
+    - export PATH="${PATH}:/repo/build/dftbplus_mdiwrapper/build/src"
+    - export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/repo/build/dftbplus/build/install/lib/"
+    - cd tests/firstcalc
+    - dftbplus_mdiwrapper -mdi "${MDI_OPTIONS}"
 
 run_scripts:
 
@@ -82,3 +84,11 @@ run_scripts:
           - export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/repo/build/dftbplus/build/install/lib/"
           - cd tests/firstcalc
           - dftbplus_mdiwrapper
+
+
+
+test_drivers:
+  test_driver:
+    script:
+      - cd tests/driver
+      - python driver.py -mdi "-role DRIVER -name driver -method TCP -port 8021"
