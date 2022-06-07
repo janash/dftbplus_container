@@ -1,0 +1,4 @@
+// Node Report
+digraph {
+	"@DEFAULT" [label="@DEFAULT" margin=0.1 shape=box]
+}
