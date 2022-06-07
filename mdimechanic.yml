@@ -52,8 +52,10 @@ docker:
       fi
 
   validate_engine:
-    - echo "Insert code that will confirm that your code has been built successfully"
-    - exit 1
+    - export PATH="${PATH}:/repo/build/dftbplus/build/install/bin/"
+    - export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/repo/build/dftbplus/build/install/lib/"
+    - cd tests/firstcalc
+    - dftb+ > output
 
 engine_tests:
   # Provide at least one example input that can be used to test your code's MDI functionality
