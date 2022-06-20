@@ -47,9 +47,9 @@ Supported commands are indicated in green, while unsupported commands are indica
 | &lt;COORDS | ![command](report/badges/box-brightgreen.svg) |
 | &lt;DIMENSIONS | ![command](report/badges/box-brightgreen.svg) |
 | &lt;ELEC_MULT | ![command](report/badges/box-lightgray.svg) |
-| &lt;ELEMENTS | ![command](report/badges/box-lightgray.svg) |
+| &lt;ELEMENTS | ![command](report/badges/box-brightgreen.svg) |
 | &lt;ENERGY | ![command](report/badges/box-brightgreen.svg) |
-| &lt;FORCES | ![command](report/badges/box-lightgray.svg) |
+| &lt;FORCES | ![command](report/badges/box-brightgreen.svg) |
 | &lt;KE | ![command](report/badges/box-lightgray.svg) |
 | &lt;KE_ELEC | ![command](report/badges/box-lightgray.svg) |
 | &lt;KE_NUC | ![command](report/badges/box-lightgray.svg) |
