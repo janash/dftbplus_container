@@ -57,6 +57,14 @@ coords = np.zeros(9)
 mdi.MDI_Send_Command("<COORDS", comm)
 mdi.MDI_Recv(9, mdi.MDI_DOUBLE, comm, buf=coords)
 
+elements = np.zeros(3, dtype=np.int32)
+mdi.MDI_Send_Command("<ELEMENTS", comm)
+mdi.MDI_Recv(3, mdi.MDI_INT, comm, buf=elements)
+
+forces = np.zeros(9)
+mdi.MDI_Send_Command("<FORCES", comm)
+mdi.MDI_Recv(9, mdi.MDI_DOUBLE, comm, buf=forces)
+
 
 # Print the name of the engine
 print("ENGINE NAME: " + str(name))
@@ -65,5 +73,7 @@ print(f"CELL: {latvecs}")
 print(f"CELL_DISPL: {origin}")
 print(f"CHARGES: {charges}")
 print(f"COORDS: {coords}")
+print(f"ELEMENTS: {elements}")
+print(f"FORCES: {forces}")
 
 mdi.MDI_Send_Command("EXIT", comm)
