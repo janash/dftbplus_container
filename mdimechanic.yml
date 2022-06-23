@@ -94,3 +94,7 @@ test_drivers:
     script:
       - cd tests/driver
       - python driver.py -mdi "-role DRIVER -name driver -method TCP -port 8021"
+  pytest:
+    script:
+      - pip install -U pytest
+      - pytest -vv
