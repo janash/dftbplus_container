@@ -4,7 +4,7 @@ MDI Driver Fixture
 
 import pytest
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def comm():
     import mdi
     from mdi import MDI_NAME_LENGTH, MDI_COMMAND_LENGTH
